@@ -671,7 +671,22 @@
   var Storage = function() {
     this._instance = null;
 
-    this.store = sessionStorage;
+    this.kvs = {};
+
+    // VAN: don't use sessionStorage
+    //this.store = sessionStorage;
+    this.store = {
+      getItem: function(key) {
+        return this.kvs[key];
+      },
+      setItem: function(key, value) {
+        this.kvs[key] = value;
+      },
+      removeItem: function(key) {
+        delete this.kvs[key];
+      }
+    };
+
     this.namespace = TableExport.prototype.defaultNamespace;
     this.getKey = function(key) {
       return this.namespace + key;
