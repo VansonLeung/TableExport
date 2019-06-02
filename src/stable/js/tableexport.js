@@ -671,19 +671,20 @@
   var Storage = function() {
     this._instance = null;
 
-    this.kvs = {};
+    this.kvs = null;
+    var self = this;
 
     // VAN: don't use sessionStorage
     //this.store = sessionStorage;
     this.store = {
       getItem: function(key) {
-        return this.kvs[key];
+        return self.kvs;
       },
       setItem: function(key, value) {
-        this.kvs[key] = value;
+        self.kvs = value;
       },
       removeItem: function(key) {
-        delete this.kvs[key];
+        // delete this.kvs[key];
       }
     };
 
